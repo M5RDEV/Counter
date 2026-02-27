@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مسبحة الأذكار الإلكترونية</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="img/Sib7a.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>مسبحة الأذكار الإلكترونية</h1>
+            <div class="theme-switch">
+                <label class="switch">
+                    <input type="checkbox" id="themeToggle">
+                    <span class="slider round"></span>
+                </label>
+                <span>الوضع الليلي</span>
+                <button id="settingsBtn" class="settings-icon" title="الإعدادات"><i class="fa-solid fa-gear"></i></button>
+            </div>
+        </header>
+
+        <main>
+            <div class="counter-display">
+                <div id="currentDhikr"></div>
+                <button id="addToGroupBtn" class="add-to-group" title="إضافة"><i class="fa-solid fa-plus"></i></button>
+                <div class="counter-numbers" id="counterNumbers"></div>
+            </div>
+
+            <div class="controls">
+                <button class="count-btn" id="countBtn">اضغط للعد</button>
+                <button class="reset-btn" id="resetBtn">إعادة تعيين</button>
+            </div>
+        </main>
+
+        <div class="settings-panel" id="settingsPanel">
+            <div class="settings-header">
+                <h2>الإعدادات</h2>
+                <button class="close-btn" id="closeSettings">&times;</button>
+            </div>
+
+            <div class="settings-content">
+                <div class="setting-group">
+                    <h3>المجموعات</h3>
+                    <button class="add-group-btn" id="addGroupBtn">+ إضافة مجموعة</button>
+                    <div class="groups-list" id="groupsList"></div>
+                </div>
+
+                <div class="setting-group">
+                    <h3>إعدادات العداد</h3>
+                    <div class="max-count-setting">
+                        <label for="maxCount">العدد الأقصى (اتركه فارغًا للعداد المفتوح):</label>
+                        <input type="number" id="maxCount" min="1" placeholder="مثال: 33">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="group-edit-modal" id="groupEditModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modalTitle">تعديل المجموعة</h2>
+                    <button class="close-btn" id="closeModal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="groupName">اسم المجموعة:</label>
+                        <input type="text" id="groupName" placeholder="أدخل اسم المجموعة">
+                    </div>
+                    
+                    <h3>الأذكار</h3>
+                    <div class="dhikr-list" id="dhikrList"></div>
+                    
+                    <div class="add-dhikr-form">
+                        <div class="form-group">
+                            <label for="dhikrText">نص الذكر:</label>
+                            <input type="text" id="dhikrText" placeholder="أدخل نص الذكر">
+                        </div>
+                        <div class="form-group">
+                            <label for="dhikrCount">عدد المرات:</label>
+                            <input type="number" id="dhikrCount" min="1" value="1">
+                        </div>
+                        <button class="save-dhikr-btn" id="saveDhikrBtn">حفظ الذكر</button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="save-btn" id="saveGroupBtn">حفظ المجموعة</button>
+                    <button class="cancel-btn" id="cancelEditBtn">إلغاء</button>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <div id="groupDropdown" class="group-dropdown" aria-hidden="true"></div>
+</body>
+</html>

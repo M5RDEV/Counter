@@ -1,0 +1,622 @@
+:root {
+    --primary-color: #4CAF50;
+    --primary-dark: #388E3C;
+    --text-color: #333;
+    --bg-color: #f5f5f5;
+    --card-color: #fff;
+    --border-color: #ddd;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+    --primary-color: #2E7D32;
+    --primary-dark: #1B5E20;
+    --text-color: #f5f5f5;
+    --bg-color: #121212;
+    --card-color: #1E1E1E;
+    --border-color: #333;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Tajawal', sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.theme-switch {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.settings-icon {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 6px;
+}
+
+/* hide old footer settings button (kept for backward-compat) */
+.settings-btn {
+    display: none;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: var(--primary-color);
+}
+
+input:checked+.slider:before {
+    transform: translateX(26px);
+}
+
+.counter-display {
+    background-color: var(--card-color);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    text-align: center;
+    position: relative;
+}
+
+#currentDhikr {
+    font-size: 24px;
+    margin-bottom: 20px;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.counter-numbers {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    font-size: 32px;
+    font-weight: bold;
+    direction: ltr;
+}
+
+.counter-number {
+    background-color: var(--primary-color);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+button {
+    border: none;
+    border-radius: 5px;
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.count-btn {
+    flex: 1;
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+}
+
+.count-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+.reset-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.reset-btn:hover {
+    background-color: #d32f2f;
+}
+
+.settings-btn {
+    background-color: #2196F3;
+    color: white;
+    width: 100%;
+    margin-top: auto;
+}
+
+.settings-btn:hover {
+    background-color: #1976D2;
+}
+
+.settings-panel {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    max-width: 400px;
+    height: 100vh;
+    background-color: var(--card-color);
+    box-shadow: -2px 0 10px var(--shadow-color);
+    padding: 20px;
+    transition: right 0.3s;
+    z-index: 100;
+    overflow-y: auto;
+}
+
+.settings-panel.open {
+    right: 0;
+}
+
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--text-color);
+    padding: 0;
+}
+
+.setting-group {
+    margin-bottom: 25px;
+}
+
+.setting-group h3 {
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.add-group-btn {
+    background-color: var(--primary-color);
+    color: white;
+    margin-bottom: 15px;
+}
+
+.groups-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* عندما نكون في وضع إضافة سريع نبرز العناصر لتسهيل الاختيار */
+.groups-list.add-mode .group-item {
+    border: 2px dashed var(--primary-color);
+    padding: 10px;
+    background-color: rgba(46,125,50,0.06);
+}
+
+/* قائمة منسدلة عائمة لاختيار المجموعة */
+.group-dropdown {
+    position: fixed;
+    z-index: 1005;
+    min-width: 200px;
+    max-width: 320px;
+    background: var(--card-color);
+    border-radius: 10px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+    border: 1px solid rgba(0,0,0,0.06);
+    max-height: 320px;
+    overflow-y: auto;
+    display: none;
+}
+
+.group-dropdown.open {
+    display: block;
+}
+
+.group-dropdown .item {
+    padding: 10px 14px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.group-dropdown .item:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+.group-item {
+    background-color: var(--bg-color);
+    padding: 12px 15px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.group-item:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.group-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-group-btn,
+.delete-group-btn {
+    padding: 5px;
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 18px;
+}
+
+/* أيقونات تعديل/حذف داخل نافذة تعديل الذكر */
+.edit-dhikr-btn,
+.delete-dhikr-btn {
+    padding: 5px;
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.dhikr-actions button i,
+.group-actions button i {
+    pointer-events: none; /* تسهيل النقر على الزر نفسه بدل الأيقونة فقط */
+}
+
+/* زر الإضافة داخل مربع العداد */
+.add-to-group {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.add-to-group:hover {
+    background-color: var(--primary-dark);
+}
+
+/* حالة عندما نفتح مجموعة وتصبح الأيقونة زر إغلاق */
+.add-to-group.group-open {
+    background-color: transparent;
+    color: var(--text-color);
+    border: 2px solid var(--border-color);
+}
+
+.max-count-setting {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.max-count-setting input {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.group-edit-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 200;
+    justify-content: center;
+    align-items: center;
+}
+
+.group-edit-modal.open {
+    display: flex;
+}
+
+.modal-content {
+    background-color: var(--card-color);
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.dhikr-list {
+    margin: 20px 0;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.dhikr-item {
+    background-color: var(--bg-color);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dhikr-item.selected {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.dhikr-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.save-dhikr-btn {
+    background-color: var(--primary-color);
+    color: white;
+    margin-top: 10px;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.save-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.cancel-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+footer {
+    margin-top: auto;
+}
+
+@media (max-width: 480px) {
+    .counter-number {
+        width: 40px;
+        height: 40px;
+        font-size: 24px;
+    }
+
+    #currentDhikr {
+        font-size: 20px;
+    }
+}
+
+/* تحسين مظهر النوافذ والإعدادات */
+.settings-panel,
+.modal-content {
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    border: 1px solid rgba(0,0,0,0.06);
+}
+
+.settings-header h2,
+.modal-header h2 {
+    font-size: 18px;
+}
+
+.form-group input,
+.max-count-setting input,
+.add-dhikr-form input {
+    transition: box-shadow 0.15s, transform 0.12s;
+}
+
+.form-group input:focus,
+.max-count-setting input:focus,
+.add-dhikr-form input:focus {
+    outline: none;
+    box-shadow: 0 6px 18px rgba(46,125,50,0.12);
+    transform: translateY(-1px);
+}
+
+/* تخصيص scrollbar عصري */
+::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--primary-color), var(--primary-dark));
+    border-radius: 10px;
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) transparent;
+}
+
+/* تغيير أيقونة الإضافة عند تفعيل وضع القوائم */
+.add-to-group.dropdown-mode {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+/* إشعارات مخصصة */
+.notification-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    max-width: 300px;
+}
+
+.notification {
+    position: relative;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    color: white;
+    background-color: #4CAF50;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.3s, fadeOut 0.5s 2.5s forwards;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notification.error {
+    background-color: #f44336;
+}
+
+.notification.warning {
+    background-color: #ff9800;
+}
+
+.notification.info {
+    background-color: #2196F3;
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
